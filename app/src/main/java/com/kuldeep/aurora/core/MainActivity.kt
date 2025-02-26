@@ -1,4 +1,4 @@
-package com.kuldeep.aurora
+package com.kuldeep.aurora.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.kuldeep.aurora.ui.theme.AuroraTheme
+import com.kuldeep.aurora.core.ui.theme.AuroraTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

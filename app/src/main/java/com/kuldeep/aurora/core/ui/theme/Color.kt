@@ -1,4 +1,4 @@
-package com.kuldeep.aurora.ui.theme
+package com.kuldeep.aurora.core.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF4C662B)
