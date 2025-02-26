@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.kuldeep.aurora.features.auth.login.presentation.LoginScreen
+import com.kuldeep.aurora.features.login.presentation.LoginScreen
 
 @Composable
 fun NavHostAurora(

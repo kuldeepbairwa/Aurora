@@ -1,4 +1,4 @@
-package com.kuldeep.aurora.features.auth.login.presentation
+package com.kuldeep.aurora.features.login.presentation
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
