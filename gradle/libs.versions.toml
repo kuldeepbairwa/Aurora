@@ -17,6 +17,7 @@ hilt-compose-navigation = "1.2.0"
 kotlinx-coroutines = "1.10.1"
 room-database = "2.6.1"
 material-icons-extended = "1.6.6"
+scarlet = "0.1.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,7 @@ androidx-hilt-compose-navigation = { group = "androidx.hilt", name = "hilt-navig
 
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 
+scarlet = { group = "com.tinder.scarlet", name = "scarlet", version.ref = "scarlet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
