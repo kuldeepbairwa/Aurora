@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.hilt.compose.navigation)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.ktor.client.core)
     implementation(libs.ktor.websockets)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
