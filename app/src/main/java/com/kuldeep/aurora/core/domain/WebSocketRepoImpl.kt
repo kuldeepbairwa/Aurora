@@ -2,12 +2,14 @@ package com.kuldeep.aurora.core.domain
 
 import com.kuldeep.aurora.core.data.WebSocketRepository
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.receiveDeserialized
 import io.ktor.client.plugins.websocket.sendSerialized
 import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.http.HttpMethod
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.isActive
 import kotlinx.serialization.Serializable
 import javax.inject.Inject
 
@@ -15,25 +17,37 @@ class WebSocketRepoImpl @Inject constructor(
     private val client: HttpClient
 ) : WebSocketRepository {
 
+    private var connection: DefaultClientWebSocketSession? = null
+
+    override suspend fun connectToWebSocket() {
+
+        if (connection?.isActive == true) return
+
+        client.webSocket(
+            method = HttpMethod.Get,
+            host = BASE_URL
+        ) {
+            connection = this
+        }
+
+    }
+
+    override suspend fun isConnected(): Flow<Boolean> {
+        return flow {
+            emit(connection?.isActive == true)
+        }
+    }
 
     override suspend fun sendToWebSocket(message: Serializable) {
-        client
-            .webSocket(
-                method = HttpMethod.Get,
-                host = BASE_URL,
-            ) { sendSerialized(message) }
+        connection?.sendSerialized(message)
     }
 
     override suspend fun receiveFromWebSocket(): Flow<Serializable> {
         return flow {
-            client
-                .webSocket(
-                    method = HttpMethod.Get,
-                    host = BASE_URL,
-                ) {
-                    val message = receiveDeserialized<Serializable>()
-                    emit(message)
-                }
+            connection?.apply {
+                val message = receiveDeserialized<Serializable>()
+                emit(message)
+            }
         }
     }
 
