@@ -1,4 +1,4 @@
-package com.kuldeep.aurora.core.data
+package com.kuldeep.aurora.core.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable

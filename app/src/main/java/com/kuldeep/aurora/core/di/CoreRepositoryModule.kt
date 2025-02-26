@@ -1,7 +1,7 @@
 package com.kuldeep.aurora.core.di
 
-import com.kuldeep.aurora.core.data.WebSocketRepository
-import com.kuldeep.aurora.core.domain.WebSocketRepoImpl
+import com.kuldeep.aurora.core.data.repository.WebSocketRepository
+import com.kuldeep.aurora.core.domain.repository.WebSocketRepoImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

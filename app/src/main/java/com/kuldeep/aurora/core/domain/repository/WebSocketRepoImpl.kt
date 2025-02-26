@@ -1,6 +1,6 @@
-package com.kuldeep.aurora.core.domain
+package com.kuldeep.aurora.core.domain.repository
 
-import com.kuldeep.aurora.core.data.WebSocketRepository
+import com.kuldeep.aurora.core.data.repository.WebSocketRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.receiveDeserialized
@@ -24,7 +24,7 @@ class WebSocketRepoImpl @Inject constructor(
         if (connection?.isActive == true) return
 
         client.webSocket(
-            method = HttpMethod.Get,
+            method = HttpMethod.Companion.Get,
             host = BASE_URL
         ) {
             connection = this
