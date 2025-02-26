@@ -1,4 +1,4 @@
-package com.kuldeep.aurora.features.auth.login.domain
+package com.kuldeep.aurora.core.domain.model
 
 import kotlinx.serialization.Serializable
 
