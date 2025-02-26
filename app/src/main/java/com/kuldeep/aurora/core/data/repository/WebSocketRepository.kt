@@ -5,11 +5,13 @@ import kotlinx.serialization.Serializable
 
 interface WebSocketRepository {
 
-    suspend fun connectToWebSocket()
+    suspend fun connectToWebSocket(chatId:String)
 
     suspend fun isConnected(): Flow<Boolean>
 
     suspend fun sendToWebSocket(message: Serializable)
 
     suspend fun receiveFromWebSocket(): Flow<Serializable>
+
+    suspend fun disconnectConnection()
 }

@@ -7,6 +7,7 @@ import io.ktor.client.plugins.websocket.receiveDeserialized
 import io.ktor.client.plugins.websocket.sendSerialized
 import io.ktor.client.plugins.websocket.webSocket
 import io.ktor.http.HttpMethod
+import io.ktor.websocket.close
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
@@ -19,13 +20,12 @@ class WebSocketRepoImpl @Inject constructor(
 
     private var connection: DefaultClientWebSocketSession? = null
 
-    override suspend fun connectToWebSocket() {
-
+    override suspend fun connectToWebSocket(chatId: String) {
         if (connection?.isActive == true) return
 
         client.webSocket(
-            method = HttpMethod.Companion.Get,
-            host = BASE_URL
+            method = HttpMethod.Get,
+            host = getBaseUrl(chatId)
         ) {
             connection = this
         }
@@ -44,16 +44,20 @@ class WebSocketRepoImpl @Inject constructor(
 
     override suspend fun receiveFromWebSocket(): Flow<Serializable> {
         return flow {
-            connection?.apply {
-                val message = receiveDeserialized<Serializable>()
-                emit(message)
-            }
+            connection?.receiveDeserialized<Serializable>()?.let { emit(it) }
         }
     }
 
+    override suspend fun disconnectConnection() {
+        connection?.close()
+    }
+
     companion object {
-        const val API_KEY =
+        private const val API_KEY =
             "kZLNlHLWqcW529bcmszsmJ06GD8C2WRQ45bhZNk7" //always store your api keys securely
-        const val BASE_URL = "wss://s14179.blr1.piesocket.com/v3/1?api_key=$API_KEY&notify_self=1"
+
+        fun getBaseUrl(chatId: String): String {
+            return "wss://s14179.blr1.piesocket.com/v3/$chatId?api_key=$API_KEY&notify_self=1"
+        }
     }
 }
