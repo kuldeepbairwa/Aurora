@@ -41,6 +41,12 @@ android {
     buildFeatures {
         compose = true
     }
+
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        )
+    }
 }
 
 kapt {
