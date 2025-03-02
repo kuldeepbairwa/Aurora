@@ -1,7 +1,11 @@
 package com.kuldeep.aurora.core.ui.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -23,6 +27,7 @@ fun AuroraAppBar(
     onActionClicked: () -> Unit ={}
 ) {
     TopAppBar(
+       windowInsets = TopAppBarDefaults.windowInsets.only(WindowInsetsSides.Bottom),
         title = { Text(
             text = text,
             style = MaterialTheme.typography.titleLarge
@@ -46,10 +51,11 @@ fun AuroraAppBar(
                 )
             }
         },
+        expandedHeight = TopAppBarDefaults.TopAppBarExpandedHeight,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            actionIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
         )
 
 

@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.core.ui.components.AccentButton
 import com.kuldeep.aurora.core.ui.components.VerticalSpacer
 import com.kuldeep.aurora.navigation.NavAction
+import com.kuldeep.aurora.navigation.NavDestination
 
 @Composable
 fun LoginScreen(
@@ -23,6 +25,12 @@ fun LoginScreen(
     onNavigation: (navDestination: NavAction) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    if (uiState.isLoggedIn){
+        LaunchedEffect(key1 = Unit){
+            onNavigation(NavAction.NavigateTo(NavDestination.ChatListScreen))
+            viewModel.onEvent(LoginUiEvent.ResetState)
+        }
+    }
     Login(uiState = uiState, onEvent = viewModel::onEvent)
 }
 

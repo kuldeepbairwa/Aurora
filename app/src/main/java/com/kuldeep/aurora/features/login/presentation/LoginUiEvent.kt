@@ -5,5 +5,5 @@ sealed interface LoginUiEvent {
 
     data class OnPhoneChange(val phone: String) : LoginUiEvent
     data object Login : LoginUiEvent
-
+    data object ResetState:LoginUiEvent
 }

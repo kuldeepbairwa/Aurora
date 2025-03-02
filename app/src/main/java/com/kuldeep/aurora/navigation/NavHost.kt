@@ -65,7 +65,7 @@ fun NavHostAurora(
             }
 
         }
-        composable<NavDestination.ChatScreen> {
+        composable<NavDestination.ChatScreen> { backStackEntry ->
 
             ChatScreen(
                 viewModel = hiltViewModel()

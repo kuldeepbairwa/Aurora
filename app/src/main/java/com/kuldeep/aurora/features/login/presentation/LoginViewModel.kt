@@ -26,6 +26,12 @@ class LoginViewModel @Inject constructor() : ViewModel() {
                     _uiState.update { it.copy(isLoggedIn = true) }
                 }
             }
+
+            LoginUiEvent.ResetState -> {
+                _uiState.update {
+                    LoginUiState()
+                }
+            }
         }
     }
 

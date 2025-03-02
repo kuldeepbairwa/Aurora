@@ -14,6 +14,78 @@ class ChatListViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(ChatListUiState())
     val uiState = _uiState.asStateFlow()
 
+
+    // adding temporary chat room
+    companion object {
+
+        val chatRooms = buildList {
+
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1234567890"
+            ))
+            add(ChatRoom(
+                chatRoomId = "123",
+                phone = "1221334434"
+            ))
+        }
+
+    }
+
+    init {
+        _uiState.update { it.copy(
+            chats = chatRooms
+        ) }
+    }
+
     fun onEvent(event: ChatListUiEvent) {
         when (event) {
             is ChatListUiEvent.OnChatSelected -> onChatSelected(event.chatRoom)
