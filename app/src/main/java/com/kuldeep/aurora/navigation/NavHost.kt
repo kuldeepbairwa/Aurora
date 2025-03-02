@@ -8,6 +8,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.kuldeep.aurora.features.chat.presentation.ChatScreen
+import com.kuldeep.aurora.features.chatList.presentation.ChatListScreen
 import com.kuldeep.aurora.features.login.presentation.LoginScreen
 
 @Composable
@@ -48,6 +50,24 @@ fun NavHostAurora(
         composable<NavDestination.LoginScreen> {
 
             LoginScreen(
+                viewModel = hiltViewModel()
+            ) { navigationAction: NavAction ->
+                handleNavigation(navController, navigationAction)
+            }
+
+        }
+        composable<NavDestination.ChatListScreen> {
+
+            ChatListScreen(
+                viewModel = hiltViewModel()
+            ) { navigationAction: NavAction ->
+                handleNavigation(navController, navigationAction)
+            }
+
+        }
+        composable<NavDestination.ChatScreen> {
+
+            ChatScreen(
                 viewModel = hiltViewModel()
             ) { navigationAction: NavAction ->
                 handleNavigation(navController, navigationAction)

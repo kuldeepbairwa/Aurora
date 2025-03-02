@@ -19,9 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
+import com.kuldeep.aurora.navigation.NavAction
 
 @Composable
-fun ChatListScreen() {
+fun ChatListScreen(
+    viewModel: ChatListViewModel,
+    onNavigation: (NavAction) -> Unit
+) {
 
     val chats = listOf<ChatRoom>()
 
