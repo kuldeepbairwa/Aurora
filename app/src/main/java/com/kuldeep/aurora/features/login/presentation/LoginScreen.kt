@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -15,6 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kuldeep.aurora.core.ui.components.AccentButton
+import com.kuldeep.aurora.core.ui.components.VerticalSpacer
 import com.kuldeep.aurora.navigation.NavAction
 
 @Composable
@@ -30,7 +30,7 @@ fun LoginScreen(
 @Composable
 fun Login(
     uiState: LoginUiState,
-    onEvent:(event:LoginUiEvent) -> Unit
+    onEvent: (event: LoginUiEvent) -> Unit
 ) {
 
 
@@ -46,7 +46,7 @@ fun Login(
             style = MaterialTheme.typography.headlineLarge,
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        VerticalSpacer(60.dp)
 
         OutlinedTextField(
             value = uiState.phone,
@@ -58,28 +58,17 @@ fun Login(
             }
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = uiState.phone,
-            onValueChange = {
-                onEvent(LoginUiEvent.OnReceiverPhoneChange(it))
-            },
-            placeholder = {
-                Text("Enter Receiver's Phone Number")
-            }
+
+        VerticalSpacer(40.dp)
+
+
+
+
+        AccentButton(
+            text = "Login",
+            onClick = { onEvent(LoginUiEvent.Login) }
         )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-
-        ElevatedButton(
-            onClick = { onEvent(LoginUiEvent.Login) }){
-
-            Text(
-                text = "Login",
-            )
-        }
 
 
     }

@@ -26,10 +26,6 @@ class LoginViewModel @Inject constructor() : ViewModel() {
                     _uiState.update { it.copy(isLoggedIn = true) }
                 }
             }
-
-            is LoginUiEvent.OnReceiverPhoneChange -> {
-                _uiState.update { it.copy(receiverPhone = event.receiverPhone) }
-            }
         }
     }
 
