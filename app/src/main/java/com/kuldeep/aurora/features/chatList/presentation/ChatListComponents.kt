@@ -24,7 +24,7 @@ fun ChatRoomItem(chatRoom: ChatRoom,onClick:()->Unit) {
     ListItem(
         headlineContent = {
             Text(
-                text = chatRoom.phone,
+                text = chatRoom.receiverPhone,
                 maxLines = 1
             )
         },

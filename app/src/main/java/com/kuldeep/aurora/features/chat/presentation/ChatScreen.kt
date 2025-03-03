@@ -12,5 +12,5 @@ fun ChatScreen(
     onNavigation: (NavAction) -> Unit
 ) {
 
-    Text(text = chatRoom.phone)
+    Text(text = chatRoom.receiverPhone)
 }

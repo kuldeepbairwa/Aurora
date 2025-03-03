@@ -22,59 +22,59 @@ class ChatListViewModel @Inject constructor() : ViewModel() {
 
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1234567890"
+                receiverPhone = "1234567890"
             ))
             add(ChatRoom(
                 chatRoomId = "123",
-                phone = "1221334434"
+                receiverPhone = "1221334434"
             ))
         }
 
@@ -98,7 +98,7 @@ class ChatListViewModel @Inject constructor() : ViewModel() {
     private fun searchChat(query: String) {
         _uiState.update { currentState ->
             currentState.copy(
-                searchResult = currentState.chats.filter { it.phone.contains(query) }
+                searchResult = currentState.chats.filter { it.receiverPhone.contains(query) }
             )
         }
     }
