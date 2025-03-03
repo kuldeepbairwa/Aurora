@@ -38,13 +38,13 @@ class WebSocketRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendToWebSocket(message: Serializable) {
+    override suspend fun sendToWebSocket(message: String) {
         connection?.sendSerialized(message)
     }
 
-    override suspend fun receiveFromWebSocket(): Flow<Serializable> {
+    override suspend fun receiveFromWebSocket(): Flow<String> {
         return flow {
-            connection?.receiveDeserialized<Serializable>()?.let { emit(it) }
+            connection?.receiveDeserialized<String>()?.let { emit(it) }
         }
     }
 

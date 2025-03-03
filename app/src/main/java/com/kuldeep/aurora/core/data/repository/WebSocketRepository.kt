@@ -9,9 +9,9 @@ interface WebSocketRepository {
 
     suspend fun isConnected(): Flow<Boolean>
 
-    suspend fun sendToWebSocket(message: Serializable)
+    suspend fun sendToWebSocket(message: String)
 
-    suspend fun receiveFromWebSocket(): Flow<Serializable>
+    suspend fun receiveFromWebSocket(): Flow<String>
 
     suspend fun disconnectConnection()
 }

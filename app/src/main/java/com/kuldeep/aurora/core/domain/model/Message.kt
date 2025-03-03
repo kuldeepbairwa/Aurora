@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Message(
-    val formPhoneNumber: Long,
-    val toPhoneNumber:Long,
+    val formPhoneNumber: String,
+    val toPhoneNumber:String,
     val message: String
 )
