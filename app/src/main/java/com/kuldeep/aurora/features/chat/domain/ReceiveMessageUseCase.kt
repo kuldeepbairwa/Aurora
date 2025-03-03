@@ -1,7 +1,7 @@
 package com.kuldeep.aurora.features.chat.domain
 
 import com.kuldeep.aurora.core.data.repository.WebSocketRepository
-import com.kuldeep.aurora.core.domain.model.Message
+import com.kuldeep.aurora.core.data.model.MessageDTO
 import kotlinx.coroutines.flow.transform
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class ReceiveMessageUseCase @Inject constructor(
 ) {
     suspend operator fun invoke() = repository.receiveFromWebSocket()
         .transform {
-           Json.decodeFromString<Message>(it)
+           Json.decodeFromString<MessageDTO>(it)
                .apply { emit(this) }
         }
 }
