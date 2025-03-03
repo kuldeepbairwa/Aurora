@@ -22,7 +22,7 @@ fun typeMapOf(ktypes: List<KType>): Map<KType, @JvmSuppressWildcards NavType<*>>
 
 private fun <T> KSerializer<*>.cast(): KSerializer<T> = this as KSerializer<T>
 
-data class JsonSerializableNavType<T : Any>(
+private data class JsonSerializableNavType<T : Any>(
     private val serializer: KSerializer<T>,
 ) : NavType<T>(isNullableAllowed = false) {
     override fun put(bundle: Bundle, key: String, value: T) {
@@ -47,7 +47,7 @@ data class JsonSerializableNavType<T : Any>(
 }
 
 
-data class JsonSerializableNullableNavType<T : Any?>(
+private data class JsonSerializableNullableNavType<T : Any?>(
     private val serializer: KSerializer<T?>,
 ) : NavType<T?>(isNullableAllowed = true) {
     override fun put(bundle: Bundle, key: String, value: T?) {
