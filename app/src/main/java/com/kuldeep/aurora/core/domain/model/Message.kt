@@ -1,10 +1,12 @@
 package com.kuldeep.aurora.core.domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Message(
-    val formPhoneNumber: String,
-    val toPhoneNumber:String,
-    val message: String
+    val senderId: String,
+    val receiverId:String,
+    val message: String,
+    val messageOwner: MessageOwner
 )
+
+enum class MessageOwner{
+    SENDER,RECEIVER
+}
