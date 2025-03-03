@@ -21,6 +21,7 @@ import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.core.ui.components.VerticalDivider
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.navigation.NavAction
+import com.kuldeep.aurora.navigation.NavDestination
 
 @Composable
 fun ChatListScreen(
@@ -32,7 +33,13 @@ fun ChatListScreen(
 
     ChatList(
         chats = uiState.chats,
-        onChatSelected = { viewModel.onEvent(ChatListUiEvent.OnChatSelected(it)) },
+        onChatSelected = {
+            onNavigation(
+                NavAction.NavigateTo(
+                    NavDestination.Chat(it)
+                )
+            )
+        },
         onFloatingActionButtonClicked = { viewModel.onEvent(ChatListUiEvent.NewChat) },
         onActionClick = { viewModel.onEvent(ChatListUiEvent.SearchChat(uiState.searchQuery)) },
         onNavigation = { onNavigation(NavAction.NavigateUp) }

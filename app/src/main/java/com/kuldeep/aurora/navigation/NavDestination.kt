@@ -13,5 +13,5 @@ sealed interface NavDestination {
     data object ChatListScreen:NavDestination
 
     @Serializable
-    data class ChatScreen(val chatRoomId:String):NavDestination
+    data class Chat(val chatRoom: ChatRoom):NavDestination
 }

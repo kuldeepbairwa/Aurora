@@ -8,9 +8,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.kuldeep.aurora.features.chat.presentation.ChatScreen
+import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.presentation.ChatListScreen
 import com.kuldeep.aurora.features.login.presentation.LoginScreen
+import kotlin.reflect.typeOf
 
 @Composable
 fun NavHostAurora(
@@ -65,9 +68,14 @@ fun NavHostAurora(
             }
 
         }
-        composable<NavDestination.ChatScreen> { backStackEntry ->
+        composable<NavDestination.Chat>(
+            typeMap = typeMapOf(listOf(typeOf<ChatRoom>()))
+        ) { backStackEntry ->
+
+            val chat : NavDestination.Chat = backStackEntry.toRoute()
 
             ChatScreen(
+                chatRoom = chat.chatRoom,
                 viewModel = hiltViewModel()
             ) { navigationAction: NavAction ->
                 handleNavigation(navController, navigationAction)
