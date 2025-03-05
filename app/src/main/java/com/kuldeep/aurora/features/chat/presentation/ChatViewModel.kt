@@ -35,10 +35,10 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun sendMessage(message: String) {
-        sendMessageUseCase(
-            message = Message(
-                senderId =
-            )
-        )
+//        sendMessageUseCase(
+//            message = Message(
+//                senderId =
+//            )
+//        )
     }
 }
