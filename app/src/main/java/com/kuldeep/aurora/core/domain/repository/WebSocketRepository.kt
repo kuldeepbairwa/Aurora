@@ -1,7 +1,6 @@
-package com.kuldeep.aurora.core.data.repository
+package com.kuldeep.aurora.core.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.serialization.Serializable
 
 interface WebSocketRepository {
 

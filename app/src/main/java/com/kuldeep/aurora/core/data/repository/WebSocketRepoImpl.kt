@@ -1,6 +1,6 @@
-package com.kuldeep.aurora.core.domain.repository
+package com.kuldeep.aurora.core.data.repository
 
-import com.kuldeep.aurora.core.data.repository.WebSocketRepository
+import com.kuldeep.aurora.core.domain.repository.WebSocketRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.receiveDeserialized
@@ -11,7 +11,6 @@ import io.ktor.websocket.close
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
-import kotlinx.serialization.Serializable
 import javax.inject.Inject
 
 class WebSocketRepoImpl @Inject constructor(

@@ -1,6 +1,6 @@
 package com.kuldeep.aurora.features.chat.domain
 
-import com.kuldeep.aurora.core.data.repository.WebSocketRepository
+import com.kuldeep.aurora.core.domain.repository.WebSocketRepository
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import javax.inject.Inject
 
