@@ -19,25 +19,25 @@ abstract class BaseViewModel : ViewModel() {
     protected val ioDispatchers = Dispatchers.IO
     protected val defaultDispatchers = Dispatchers.Default
 
-    inline fun launchWithMainDispatcher(crossinline block: () -> Unit) {
+    inline fun launchWithMainDispatcher(crossinline block: suspend () -> Unit) {
         viewModelScope.launch(Dispatchers.Main) {
             block()
         }
     }
 
-    inline fun launchWithIODispatcher(crossinline block: () -> Unit) {
+    inline fun launchWithIoDispatcher(crossinline block: suspend () -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             block()
         }
     }
 
-    inline fun launchWithDefaultDispatcher(crossinline block: () -> Unit) {
+    inline fun launchWithDefaultDispatcher(crossinline block: suspend () -> Unit) {
         viewModelScope.launch(Dispatchers.Default) {
             block()
         }
     }
 
-    suspend inline fun withMainContext(crossinline block: () -> Unit){
+    suspend inline fun withMainContext(crossinline block: suspend () -> Unit){
         withContext(Dispatchers.Main){
             block()
         }
