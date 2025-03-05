@@ -7,5 +7,6 @@ data class ChatListUiState(
     val selectedChat: ChatRoom? = null,
     val searchResult: List<ChatRoom> = emptyList(),
     val searchQuery: String = "",
-    val newChat:Boolean = false
+    val newChat:Boolean = false,
+    val isUserLoggedIn:Boolean = true,
 )

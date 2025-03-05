@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
                         NavHostAurora(
                             navController = navController,
-                            startDestination = NavDestination.LoginScreen
+                            startDestination = NavDestination.ChatListScreen
                         )
                     }
 

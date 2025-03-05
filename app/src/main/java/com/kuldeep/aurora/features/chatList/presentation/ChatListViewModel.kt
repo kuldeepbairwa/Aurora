@@ -2,6 +2,7 @@ package com.kuldeep.aurora.features.chatList.presentation
 
 import androidx.lifecycle.ViewModel
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
+import com.kuldeep.aurora.features.chatList.domain.GetLoggedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -9,7 +10,9 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatListViewModel @Inject constructor() : ViewModel() {
+class ChatListViewModel @Inject constructor(
+    private val getLoggedInUserUseCase : GetLoggedInUserUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ChatListUiState())
     val uiState = _uiState.asStateFlow()
@@ -101,6 +104,10 @@ class ChatListViewModel @Inject constructor() : ViewModel() {
                 searchResult = currentState.chats.filter { it.receiverPhone.contains(query) }
             )
         }
+    }
+
+    fun getUserPhone(){
+
     }
 
     private fun startNewChat() {
