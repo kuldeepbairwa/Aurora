@@ -102,6 +102,5 @@ fun handleNavigation(navController: NavController, navAction: NavAction) {
             )
         }
 
-        is NavAction.Navigate -> TODO()
     }
 }
