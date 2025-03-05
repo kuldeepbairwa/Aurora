@@ -1,5 +1,6 @@
 package com.kuldeep.aurora.core.data.repository
 
+import com.kuldeep.aurora.BuildConfig
 import com.kuldeep.aurora.core.domain.repository.WebSocketRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
@@ -52,8 +53,7 @@ class WebSocketRepoImpl @Inject constructor(
     }
 
     companion object {
-        private const val API_KEY =
-            "kZLNlHLWqcW529bcmszsmJ06GD8C2WRQ45bhZNk7" //always store your api keys securely
+        private const val API_KEY = BuildConfig.API_KEY //always store your api keys securely
 
         fun getBaseUrl(chatId: String): String {
             return "wss://s14179.blr1.piesocket.com/v3/$chatId?api_key=$API_KEY&notify_self=1"
