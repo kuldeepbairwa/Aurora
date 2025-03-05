@@ -1,6 +1,7 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
 import androidx.lifecycle.ViewModel
+import com.kuldeep.aurora.core.ui.BaseViewModel
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.GetLoggedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,11 +13,20 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
     private val getLoggedInUserUseCase : GetLoggedInUserUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(ChatListUiState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        launchWithIoDispatcher {
+            _uiState.update {
+                it.copy(
+                    isUserLoggedIn = getLoggedInUserUseCase() != ""
+                )
+            }
+        }
+    }
 
     // adding temporary chat room
     companion object {
