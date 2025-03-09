@@ -26,9 +26,8 @@ import com.kuldeep.aurora.core.ui.components.Loader
 import com.kuldeep.aurora.core.ui.components.PopupMenu
 import com.kuldeep.aurora.core.ui.components.PopupMenuItem
 import com.kuldeep.aurora.core.ui.components.VerticalDivider
-import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.model.LoginState
-import com.kuldeep.aurora.features.chatList.domain.model.isLoggedOut
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.navigation.NavAction
 import com.kuldeep.aurora.navigation.NavDestination
 @Composable
@@ -63,8 +62,8 @@ private fun OpenChat(
     onEvent: (ChatListUiEvent) -> Unit
 ) {
     LaunchedEffect(uiState.openChat) {
-        uiState.openChat?.let { chat ->
-            onNavigation(NavAction.NavigateTo(NavDestination.Chat(chat)))
+        uiState.openChat?.let { contact ->
+            onNavigation(NavAction.NavigateTo(NavDestination.Chat(contact)))
             onEvent(ChatListUiEvent.ClearOpenChat)
         }
     }
@@ -122,7 +121,7 @@ private fun ChatListContent(
     ) { innerPadding ->
         ChatList(
             modifier = Modifier.padding(innerPadding),
-            chats = uiState.chats,
+            contacts = uiState.chats,
             onEvent = onEvent
         )
     }
@@ -138,13 +137,13 @@ private fun Logout(onNavigation: (NavAction) -> Unit) {
 @Composable
 private fun ChatList(
     modifier: Modifier = Modifier,
-    chats: List<ChatRoom>,
+    contacts: List<Contact>,
     onEvent: (ChatListUiEvent) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(chats) { chat ->
-            ChatRoomItem(chatRoom = chat) {
-                onEvent(ChatListUiEvent.OnChatSelected(chat))
+        items(contacts) { contact ->
+            ContactItem(contact = contact){
+                onEvent(ChatListUiEvent.OnChatSelected(contact))
             }
             VerticalDivider()
         }

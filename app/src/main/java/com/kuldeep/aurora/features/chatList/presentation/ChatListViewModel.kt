@@ -1,10 +1,10 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
 import com.kuldeep.aurora.core.ui.BaseViewModel
-import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.GetLoggedInUserUseCase
 import com.kuldeep.aurora.features.chatList.domain.LogoutUseCase
 import com.kuldeep.aurora.features.chatList.domain.model.LoginState
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,10 +23,10 @@ class ChatListViewModel @Inject constructor(
     init {
         launchWithIoDispatcher {
 
-            getLoggedInUserUseCase().collect { phone ->
+            getLoggedInUserUseCase().collect { phoneNumber ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        loginState = if (phone.isEmpty()) LoginState.LoggedOut
+                        loginState = if (phoneNumber.isEmpty()) LoginState.LoggedOut
                         else LoginState.LoggedIn
                     )
                 }
@@ -39,14 +39,14 @@ class ChatListViewModel @Inject constructor(
     init {
         _uiState.update {
             it.copy(
-                chats = chatRooms
+                chats = Contacts
             )
         }
     }
 
     fun onEvent(event: ChatListUiEvent) {
         when (event) {
-            is ChatListUiEvent.OnChatSelected -> onChatSelected(event.chatRoom)
+            is ChatListUiEvent.OnChatSelected -> onChatSelected(event.contact)
             is ChatListUiEvent.SearchChat -> searchChat(event.query)
             is ChatListUiEvent.NewChat -> startNewChat(event.openScreen)
             ChatListUiEvent.NavigateUp -> navigateUp()
@@ -75,12 +75,12 @@ class ChatListViewModel @Inject constructor(
     private fun searchChat(query: String) {
         _uiState.update { currentState ->
             currentState.copy(
-                searchResult = currentState.chats.filter { it.receiverPhone.contains(query) }
+                searchResult = currentState.chats.filter { it.name.contains(query) }
             )
         }
     }
 
-    fun getUserPhone() {
+    fun getUserphoneNumber() {
 
     }
 
@@ -93,10 +93,10 @@ class ChatListViewModel @Inject constructor(
 
     }
 
-    private fun onChatSelected(chatRoom: ChatRoom) {
+    private fun onChatSelected(contact: Contact) {
 
         _uiState.update {
-            it.copy(openChat = chatRoom)
+            it.copy(openChat = contact)
         }
 
     }
@@ -105,90 +105,54 @@ class ChatListViewModel @Inject constructor(
     // adding temporary chat room
     companion object {
 
-        val chatRooms = buildList {
+        val Contacts = buildList {
 
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
+                Contact(
+                    name = "Kuldeep",
+                    phoneNumber = "1234567890"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
+                Contact(
+                    name = "Lalit",
+                    phoneNumber = "1221334434"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
+                Contact(
+                    name = "Asha",
+                    phoneNumber = "1234567890"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
+                Contact(
+                    name = "Minakshi",
+                    phoneNumber = "1221334434"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
+                Contact(
+                    name = "Deepak",
+                    phoneNumber = "1234567890"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
+                Contact(
+                    name = "R unc",
+                    phoneNumber = "1221334434"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
+                Contact(
+                    name = "T unc",
+                    phoneNumber = "1234567890"
                 )
             )
             add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1234567890"
-                )
-            )
-            add(
-                ChatRoom(
-                    chatRoomId = "123",
-                    receiverPhone = "1221334434"
+                Contact(
+                    name = "K unc",
+                    phoneNumber = "1221334434"
                 )
             )
         }

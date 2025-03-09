@@ -17,21 +17,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 
 @Composable
-fun ChatRoomItem(chatRoom: ChatRoom,onClick:()->Unit) {
+fun ContactItem(contact:Contact, onClick:()->Unit) {
 
     ListItem(
         headlineContent = {
             Text(
-                text = chatRoom.receiverPhone,
-                maxLines = 1
+                text = contact.name,
+                maxLines = 1,
+                style = MaterialTheme.typography.titleMedium
             )
         },
         colors =
-        ListItemDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer
-        ),
+            ListItemDefaults.colors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
+            ),
         leadingContent = {
 
             Icon(
@@ -45,16 +47,10 @@ fun ChatRoomItem(chatRoom: ChatRoom,onClick:()->Unit) {
             )
 
         },
+        supportingContent = {
+            Text(text = contact.phoneNumber, style = MaterialTheme.typography.bodySmall)
+        },
         modifier = Modifier.clickable { onClick() }
     )
 
-}
-
-@Preview
-@Composable
-private fun ChatRoomItemPreview() {
-    ChatRoomItem(
-        ChatRoom("123","1234456567"),
-        {}
-    )
 }

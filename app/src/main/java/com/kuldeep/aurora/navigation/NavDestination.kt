@@ -1,6 +1,6 @@
 package com.kuldeep.aurora.navigation
 
-import com.kuldeep.aurora.features.chatList.domain.ChatRoom
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,7 +13,7 @@ sealed interface NavDestination {
     data object ChatListScreen:NavDestination
 
     @Serializable
-    data class Chat(val chatRoom: ChatRoom):NavDestination
+    data class Chat(val contact: Contact):NavDestination
 
     @Serializable
     data object NewChat:NavDestination

@@ -7,11 +7,22 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -27,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.core.ui.components.AccentButton
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.core.ui.components.VerticalSpacer
+import com.kuldeep.aurora.features.chatList.presentation.ContactItem
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.navigation.NavAction
 
@@ -86,20 +99,42 @@ fun NewChatScreen(viewModel: NewChatViewModel, onNavigation: (NavAction) -> Unit
                     )
                 }
             }
-            NewChatContent(contacts = uiState.contacts)
+            NewChatContent(contacts = uiState.contacts){
+
+
+
+            }
         }
     }
 }
 
 
 @Composable
-fun NewChatContent(contacts: List<Contact>) {
+fun NewChatContent(contacts: List<Contact>,onClick: (Contact) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
 
+        if (contacts.isEmpty()) {
+            NoContacts()
+        }
+
+        ContactsList(contacts = contacts, onClick = onClick)
 
     }
+}
+
+@Composable
+fun ContactsList(contacts: List<Contact>,onClick: (Contact) -> Unit) {
+
+    LazyColumn {
+        items(contacts) {
+            ContactItem(it){
+                onClick(it)
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -107,11 +142,7 @@ fun NoContacts(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ) {
-
-        Text(text = "No Contacts")
-
-    }
+    ) { Text(text = "Add contacts to start a new chat", modifier = Modifier) }
 }
 
 

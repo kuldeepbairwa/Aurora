@@ -13,6 +13,7 @@ import com.kuldeep.aurora.features.chat.presentation.ChatScreen
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.presentation.ChatListScreen
 import com.kuldeep.aurora.features.login.presentation.LoginScreen
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.features.newChat.presentation.NewChatScreen
 import kotlin.reflect.typeOf
 
@@ -70,13 +71,13 @@ fun NavHostAurora(
 
         }
         composable<NavDestination.Chat>(
-            typeMap = typeMapOf(listOf(typeOf<ChatRoom>()))
+            typeMap = typeMapOf(listOf(typeOf<Contact>()))
         ) { backStackEntry ->
 
             val chat : NavDestination.Chat = backStackEntry.toRoute()
 
             ChatScreen(
-                chatRoom = chat.chatRoom,
+                contact = chat.contact,
                 viewModel = hiltViewModel()
             ) { navigationAction: NavAction ->
                 handleNavigation(navController, navigationAction)
