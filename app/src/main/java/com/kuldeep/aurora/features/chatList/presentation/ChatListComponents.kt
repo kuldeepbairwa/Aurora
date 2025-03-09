@@ -32,7 +32,7 @@ fun ContactItem(contact:Contact, onClick:()->Unit) {
         },
         colors =
             ListItemDefaults.colors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainer
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
             ),
         leadingContent = {
 
@@ -41,9 +41,9 @@ fun ContactItem(contact:Contact, onClick:()->Unit) {
                 contentDescription = null,
                 modifier = Modifier
                     .clip(shape = CircleShape)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer)
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh)
                     .padding(10.dp),
-                tint = MaterialTheme.colorScheme.onTertiaryContainer
+                tint = MaterialTheme.colorScheme.onSurface
             )
 
         },

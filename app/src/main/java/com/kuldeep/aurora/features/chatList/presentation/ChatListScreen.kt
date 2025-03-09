@@ -145,7 +145,6 @@ private fun ChatList(
             ContactItem(contact = contact){
                 onEvent(ChatListUiEvent.OnChatSelected(contact))
             }
-            VerticalDivider()
         }
     }
 }
