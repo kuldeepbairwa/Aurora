@@ -1,6 +1,7 @@
 package com.kuldeep.aurora.features.chat.presentation
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -78,7 +79,7 @@ fun ChatContent(
 
     Column(modifier = modifier) {
 
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyColumn(modifier = Modifier.weight(1f), contentPadding = PaddingValues(vertical = 8.dp)) {
             items(messages) {
                 MessageItem(it)
             }

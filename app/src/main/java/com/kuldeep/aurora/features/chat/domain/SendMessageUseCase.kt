@@ -22,8 +22,8 @@ class SendMessageUseCase @Inject constructor(
         repository.sendToWebSocket(
             Json.encodeToString(
                 Message(
-                    senderId = dataStoreRepository.getUserPhone(),
-                    receiverId = receiver,
+                    senderId = dataStoreRepository.getUserPhone().replace(" ",""),
+                    receiverId = receiver.replace(" ",""),
                     message = message,
                     messageOwner = MessageOwner.SENDER
                 ).toMessageDTO()

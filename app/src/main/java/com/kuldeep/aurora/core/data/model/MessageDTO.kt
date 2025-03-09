@@ -11,11 +11,11 @@ data class MessageDTO(
     val message: String
 )
 
-fun MessageDTO.toMessage(): Message{
+fun MessageDTO.toMessage(messageOwner: MessageOwner): Message{
     return Message(
         senderId = formPhoneNumber,
         receiverId = toPhoneNumber,
         message = message,
-        messageOwner = MessageOwner.RECEIVER
+        messageOwner = messageOwner
     )
 }
