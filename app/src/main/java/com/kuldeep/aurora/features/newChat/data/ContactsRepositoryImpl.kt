@@ -3,6 +3,7 @@ package com.kuldeep.aurora.features.newChat.data
 import android.content.ContentResolver
 import android.content.Context
 import android.provider.ContactsContract
+import androidx.core.text.isDigitsOnly
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.features.newChat.domain.repository.ContactsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -53,7 +54,14 @@ class ContactsRepositoryImpl @Inject constructor(
 
 
 
-        return contacts.sortedBy {
+        return contacts
+            .distinct()
+            .filterNot {
+                it.phoneNumber.contains(Regex("\"^[0-9+]+\\\$\""))
+                        && it.phoneNumber.isEmpty()
+            }
+            .map { it.copy(phoneNumber = it.phoneNumber.replace("-","")) }
+            .sortedBy {
             it.name
         }
 
