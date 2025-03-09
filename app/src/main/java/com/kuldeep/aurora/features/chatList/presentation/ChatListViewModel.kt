@@ -1,6 +1,5 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
-import androidx.lifecycle.ViewModel
 import com.kuldeep.aurora.core.ui.BaseViewModel
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.GetLoggedInUserUseCase
@@ -49,7 +48,7 @@ class ChatListViewModel @Inject constructor(
         when (event) {
             is ChatListUiEvent.OnChatSelected -> onChatSelected(event.chatRoom)
             is ChatListUiEvent.SearchChat -> searchChat(event.query)
-            ChatListUiEvent.NewChat -> startNewChat()
+            is ChatListUiEvent.NewChat -> startNewChat(event.openScreen)
             ChatListUiEvent.NavigateUp -> navigateUp()
             ChatListUiEvent.ClearOpenChat -> clearOpenChat()
             is ChatListUiEvent.PopupMenu -> handlePopUpMenu(event.expanded)
@@ -85,8 +84,9 @@ class ChatListViewModel @Inject constructor(
 
     }
 
-    private fun startNewChat() {
+    private fun startNewChat(openScreen: Boolean) {
 
+        _uiState.update { it.copy(newChat = openScreen) }
     }
 
     private fun navigateUp() {

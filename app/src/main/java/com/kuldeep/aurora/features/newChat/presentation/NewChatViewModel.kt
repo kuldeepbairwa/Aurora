@@ -17,12 +17,31 @@ class NewChatViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NewChatUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun onEvent(event: NewChatUiEvent){
-        when(event){
+    fun onEvent(event: NewChatUiEvent) {
+        when (event) {
             NewChatUiEvent.GetContacts -> getContacts()
-            NewChatUiEvent.NavigateUp -> TODO()
-            is NewChatUiEvent.OnContactSelected -> TODO()
-            NewChatUiEvent.RequestContactPermission -> TODO()
+            is NewChatUiEvent.OnContactSelected -> {
+
+                _uiState.update {
+                    it.copy(onContactSelected = event.contact)
+                }
+            }
+
+            is NewChatUiEvent.RequestContactPermission -> {
+                _uiState.update {
+                    it.copy(
+                        requestContactPermission = event.granted
+                    )
+                }
+            }
+
+            is NewChatUiEvent.ContactPermissionResult -> {
+                _uiState.update {
+                    it.copy(
+                        contactPermissionGranted = event.granted
+                    )
+                }
+            }
         }
     }
 

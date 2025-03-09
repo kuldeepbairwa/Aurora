@@ -14,4 +14,7 @@ sealed interface NavDestination {
 
     @Serializable
     data class Chat(val chatRoom: ChatRoom):NavDestination
+
+    @Serializable
+    data object NewChat:NavDestination
 }

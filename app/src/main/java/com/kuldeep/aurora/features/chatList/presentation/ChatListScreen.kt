@@ -41,6 +41,13 @@ fun ChatListScreen(
     // Handle opening a chat
     OpenChat(uiState, onNavigation, viewModel::onEvent)
 
+    LaunchedEffect(uiState.newChat) {
+        if (uiState.newChat){
+            onNavigation(NavAction.NavigateTo(NavDestination.NewChat))
+            viewModel.onEvent(ChatListUiEvent.NewChat(false))
+        }
+    }
+
     // Render the appropriate UI based on the login state
     when (uiState.loginState) {
         LoginState.LoggingIn -> Loader()
@@ -104,7 +111,7 @@ private fun ChatListContent(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onEvent(ChatListUiEvent.NewChat) },
+                onClick = { onEvent(ChatListUiEvent.NewChat(true)) },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer

@@ -13,6 +13,7 @@ import com.kuldeep.aurora.features.chat.presentation.ChatScreen
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.presentation.ChatListScreen
 import com.kuldeep.aurora.features.login.presentation.LoginScreen
+import com.kuldeep.aurora.features.newChat.presentation.NewChatScreen
 import kotlin.reflect.typeOf
 
 @Composable
@@ -76,6 +77,16 @@ fun NavHostAurora(
 
             ChatScreen(
                 chatRoom = chat.chatRoom,
+                viewModel = hiltViewModel()
+            ) { navigationAction: NavAction ->
+                handleNavigation(navController, navigationAction)
+            }
+
+        }
+
+        composable<NavDestination.NewChat> {
+
+            NewChatScreen(
                 viewModel = hiltViewModel()
             ) { navigationAction: NavAction ->
                 handleNavigation(navController, navigationAction)
