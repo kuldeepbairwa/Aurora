@@ -109,48 +109,56 @@ class ChatListViewModel @Inject constructor(
 
             add(
                 Contact(
+                    id = 1,
                     name = "Kuldeep",
                     phoneNumber = "1234567890"
                 )
             )
             add(
                 Contact(
+                    id = 2,
                     name = "Lalit",
                     phoneNumber = "1221334434"
                 )
             )
             add(
                 Contact(
+                    id = 3,
                     name = "Asha",
                     phoneNumber = "1234567890"
                 )
             )
             add(
                 Contact(
+                    id = 4,
                     name = "Minakshi",
                     phoneNumber = "1221334434"
                 )
             )
             add(
                 Contact(
+                    id = 5,
                     name = "Deepak",
                     phoneNumber = "1234567890"
                 )
             )
             add(
                 Contact(
+                    id = 6,
                     name = "R unc",
                     phoneNumber = "1221334434"
                 )
             )
             add(
                 Contact(
+                    id = 7,
                     name = "T unc",
                     phoneNumber = "1234567890"
                 )
             )
             add(
                 Contact(
+                    id = 7,
                     name = "K unc",
                     phoneNumber = "1221334434"
                 )

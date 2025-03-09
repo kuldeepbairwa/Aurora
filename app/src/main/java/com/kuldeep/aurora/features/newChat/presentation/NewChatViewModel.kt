@@ -51,7 +51,9 @@ class NewChatViewModel @Inject constructor(
             return
 
         launchWithIoDispatcher {
-            getContactsUseCase()
+            _uiState.update {
+                it.copy(contacts = getContactsUseCase())
+            }
         }
     }
 }

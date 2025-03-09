@@ -39,6 +39,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.core.ui.components.AccentButton
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.core.ui.components.VerticalSpacer
+import com.kuldeep.aurora.features.chatList.presentation.ChatListUiEvent
 import com.kuldeep.aurora.features.chatList.presentation.ContactItem
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.navigation.NavAction
@@ -99,10 +100,14 @@ fun NewChatScreen(viewModel: NewChatViewModel, onNavigation: (NavAction) -> Unit
                     )
                 }
             }
-            NewChatContent(contacts = uiState.contacts){
+
+            if (uiState.contactPermissionGranted && uiState.contacts.isEmpty()) {
+                NoContacts()
+            } else {
+                NewChatContent(contacts = uiState.contacts) {
 
 
-
+                }
             }
         }
     }
@@ -110,38 +115,29 @@ fun NewChatScreen(viewModel: NewChatViewModel, onNavigation: (NavAction) -> Unit
 
 
 @Composable
-fun NewChatContent(contacts: List<Contact>,onClick: (Contact) -> Unit) {
+fun NewChatContent(contacts: List<Contact>, onClick: (Contact) -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        if (contacts.isEmpty()) {
-            NoContacts()
-        }
 
-        ContactsList(contacts = contacts, onClick = onClick)
-
-    }
-}
-
-@Composable
-fun ContactsList(contacts: List<Contact>,onClick: (Contact) -> Unit) {
-
-    LazyColumn {
-        items(contacts) {
-            ContactItem(it){
-                onClick(it)
+        LazyColumn {
+            items(contacts) { contact ->
+                ContactItem(contact = contact) {
+                    onClick(contact)
+                }
             }
         }
-    }
 
+    }
 }
 
 @Composable
 fun NoContacts(modifier: Modifier = Modifier) {
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) { Text(text = "Add contacts to start a new chat", modifier = Modifier) }
 }
 
