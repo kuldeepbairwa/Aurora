@@ -16,21 +16,13 @@ class SendMessageUseCase @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
 ) {
 
-    var sender :String = ""
-
-    init {
-        CoroutineScope(Dispatchers.IO).launch {
-            dataStoreRepository.getUserPhoneFlow().collect {
-                sender = it
-            }
-        }
-    }
-
     suspend operator fun invoke(message: String,receiver:String) {
+
+        if (message.isEmpty()) return
         repository.sendToWebSocket(
             Json.encodeToString(
                 Message(
-                    senderId = sender,
+                    senderId = dataStoreRepository.getUserPhone(),
                     receiverId = receiver,
                     message = message,
                     messageOwner = MessageOwner.SENDER

@@ -52,28 +52,21 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun sendMessage() {
-
-        try {
-            _uiState.update {
-                it.copy(message = "")
-            }
-            launchWithIoDispatcher {
+        launchWithIoDispatcher {
+            try {
                 sendMessageUseCase(
                     message = uiState.value.message,
                     receiver = uiState.value.contact?.phoneNumber
                         ?: throw IllegalStateException("Invalid Phone Number")
                 )
 
+                // Clear message field after successful send
+                _uiState.update { it.copy(message = "") }
 
-
-
+            } catch (e: Exception) {
+                Log.e("MESSAGE SEND ERROR", e.message ?: "Unknown error")
             }
-        } catch (e: Exception) {
-
-            Log.d("MESSAGE SEND ERROR",e.message?:"")
-
         }
-
     }
 
 
