@@ -57,7 +57,7 @@ class ContactsRepositoryImpl @Inject constructor(
         return contacts
             .distinct()
             .filterNot {
-                it.phoneNumber.contains(Regex("\"^[0-9+]+\\\$\""))
+                it.phoneNumber.contains(Regex("^[0-9+]+\\\$"))
                         && it.phoneNumber.isEmpty()
             }
             .map { it.copy(phoneNumber = it.phoneNumber.replace("-","")) }

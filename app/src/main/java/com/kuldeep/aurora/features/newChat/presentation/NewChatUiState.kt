@@ -6,6 +6,8 @@ data class NewChatUiState(
     val contactPermissionGranted: Boolean = false,
     val requestContactPermission: Boolean = false,
     val contacts: List<Contact> = emptyList(),
+    val searchQuery: String = "",
+    val searchResults: List<Contact> = emptyList(),
     val onContactSelected: Contact? = null,
     val navigateUp: Boolean = false
 )

@@ -42,7 +42,33 @@ class NewChatViewModel @Inject constructor(
                     )
                 }
             }
+
+            is NewChatUiEvent.SearchQueryChanged -> {
+                _uiState.update {
+                    it.copy(searchQuery = event.query)
+                }
+                filterContacts(event.query)
+            }
+
+            is NewChatUiEvent.SearchResultsChanged -> {
+                _uiState.update {
+                    it.copy(searchResults = event.results)
+                }
+            }
         }
+    }
+
+    private fun filterContacts(query: String) {
+
+        launchWithDefaultDispatcher {
+            val filteredContacts = uiState.value.contacts.filter {
+                it.name.contains(query, ignoreCase = true)
+            }
+            _uiState.update {
+                it.copy(searchResults = filteredContacts)
+            }
+        }
+
     }
 
     private fun getContacts() {
