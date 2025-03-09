@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetLoggedInUserUseCase @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
 ){
-    suspend operator fun invoke() = dataStoreRepository.getUserPhone()
+    suspend operator fun invoke() = dataStoreRepository.getUserPhoneFlow()
 }

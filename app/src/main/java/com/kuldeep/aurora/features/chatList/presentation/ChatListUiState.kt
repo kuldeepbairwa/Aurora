@@ -1,5 +1,6 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
+import com.kuldeep.aurora.core.ui.components.PopupMenuItem
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 
 data class ChatListUiState(
@@ -8,5 +9,6 @@ data class ChatListUiState(
     val searchQuery: String = "",
     val newChat: Boolean = false,
     val isUserLoggedIn: Boolean = true,
-    val openChat: ChatRoom? = null
+    val openChat: ChatRoom? = null,
+    val popUpExpanded: Boolean = false,
 )

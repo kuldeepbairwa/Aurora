@@ -9,4 +9,6 @@ sealed interface ChatListUiEvent {
     data class SearchChat(val query: String) : ChatListUiEvent
     data object NavigateUp : ChatListUiEvent
     data object ClearOpenChat : ChatListUiEvent
+    data class PopupMenu(val expanded: Boolean) : ChatListUiEvent
+    data object LogOut : ChatListUiEvent
 }

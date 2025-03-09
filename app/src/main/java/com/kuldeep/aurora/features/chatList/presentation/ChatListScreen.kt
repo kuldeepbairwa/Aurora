@@ -22,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.R
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
+import com.kuldeep.aurora.core.ui.components.PopupMenu
+import com.kuldeep.aurora.core.ui.components.PopupMenuItem
 import com.kuldeep.aurora.core.ui.components.VerticalDivider
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.navigation.NavAction
@@ -33,6 +35,11 @@ fun ChatListScreen(
     onNavigation: (NavAction) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+
+    val popupMenu: List<PopupMenuItem> = listOf(
+        PopupMenuItem("Logout") { viewModel.onEvent(ChatListUiEvent.LogOut) }
+    )
 
     LaunchedEffect(uiState.isUserLoggedIn, uiState.openChat) {
         if (!uiState.isUserLoggedIn) {
@@ -59,12 +66,21 @@ fun ChatListScreen(
                             contentDescription = stringResource(R.string.search_chat)
                         )
                     }
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        viewModel.onEvent(ChatListUiEvent.PopupMenu(true))
+                    }) {
                         Icon(
                             Icons.Default.MoreVert,
                             contentDescription = stringResource(R.string.more)
                         )
                     }
+                    PopupMenu(
+                        expanded = uiState.popUpExpanded,
+                        onDismissRequest = {
+                            viewModel.onEvent(ChatListUiEvent.PopupMenu(false))
+                        },
+                        items = popupMenu
+                    )
                 }
             )
         },
