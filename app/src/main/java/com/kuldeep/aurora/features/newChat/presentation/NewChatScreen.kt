@@ -43,6 +43,7 @@ import com.kuldeep.aurora.core.ui.components.VerticalSpacer
 import com.kuldeep.aurora.features.chatList.presentation.ContactItem
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import com.kuldeep.aurora.navigation.NavAction
+import com.kuldeep.aurora.navigation.NavDestination
 
 @Composable
 fun NewChatScreen(viewModel: NewChatViewModel, onNavigation: (NavAction) -> Unit) {
@@ -137,6 +138,13 @@ fun NewChatScreen(viewModel: NewChatViewModel, onNavigation: (NavAction) -> Unit
             } else {
                 NewChatContent(contacts = contacts) {
 
+
+                    onNavigation(
+                        NavAction.NavigateToPopUpInclusive(
+                            NavDestination.Chat(it),
+                            NavDestination.NewChat
+                        )
+                    )
 
                 }
             }

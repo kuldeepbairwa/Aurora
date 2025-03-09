@@ -107,16 +107,15 @@ fun handleNavigation(navController: NavController, navAction: NavAction) {
         }
 
         NavAction.PopBackStack -> navController.popBackStack()
-        is NavAction.PopUpTo -> {
-            navController.popBackStack(
-                navAction.navDestination,
-                navAction.inclusive
-            )
+        is NavAction.NavigateToPopUpInclusive -> {
+            navController.navigate(navAction.navDestination){
+                popUpTo(navAction.inclusiveDestination){ this.inclusive = true }
+            }
         }
 
         is NavAction.NavigateToAndClearBackStack -> {
             // Clear the backstack and navigate to the destination
-            navController.popBackStack() // Clear the entire backstack
+            navController.popBackStack()
             navController.navigate(navAction.navDestination)
         }
 
