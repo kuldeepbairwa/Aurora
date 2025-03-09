@@ -1,10 +1,13 @@
 package com.kuldeep.aurora.features.chat.presentation
 
-import androidx.lifecycle.ViewModel
-import com.kuldeep.aurora.core.domain.model.Message
+import android.util.Log
+import com.kuldeep.aurora.core.ui.BaseViewModel
 import com.kuldeep.aurora.features.chat.domain.ConnectToChatRoomUseCase
+import com.kuldeep.aurora.features.chat.domain.DisconnectFromChatUseCase
 import com.kuldeep.aurora.features.chat.domain.ReceiveMessageUseCase
 import com.kuldeep.aurora.features.chat.domain.SendMessageUseCase
+import com.kuldeep.aurora.features.chat.domain.model.Message
+import com.kuldeep.aurora.features.newChat.domain.model.Contact
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,11 +18,16 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val sendMessageUseCase: SendMessageUseCase,
     private val receiveMessageUseCase: ReceiveMessageUseCase,
-    private val connectToChatRoomUseCase: ConnectToChatRoomUseCase
-): ViewModel() {
+    private val connectToChatRoomUseCase: ConnectToChatRoomUseCase,
+    private val disconnectFromChatUseCase: DisconnectFromChatUseCase
+): BaseViewModel() {
 
     private val _uiState = MutableStateFlow(ChatUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        receiveMessages()
+    }
 
     fun onEvent(event: ChatUiEvents){
         when(event){
@@ -29,16 +37,70 @@ class ChatViewModel @Inject constructor(
                 }
             }
             ChatUiEvents.SendMessageClick -> {
-                sendMessage(_uiState.value.message)
+                sendMessage()
+            }
+
+            ChatUiEvents.DisconnectFromChatRoom -> disconnectToChatRoom()
+            ChatUiEvents.ConnectToChatRoom -> connectToChatRoom()
+        }
+    }
+
+    fun contactBundle(contact: Contact){
+        _uiState.update {
+            it.copy(contact = contact)
+        }
+    }
+
+    private fun sendMessage() {
+
+        try {
+            _uiState.update {
+                it.copy(message = "")
+            }
+            launchWithIoDispatcher {
+                sendMessageUseCase(
+                    message = uiState.value.message,
+                    receiver = uiState.value.contact?.phoneNumber
+                        ?: throw IllegalStateException("Invalid Phone Number")
+                )
+
+
+
+
+            }
+        } catch (e: Exception) {
+
+            Log.d("MESSAGE SEND ERROR",e.message?:"")
+
+        }
+
+    }
+
+
+    private fun receiveMessages() {
+
+        launchWithIoDispatcher {
+            receiveMessageUseCase().collect { message ->
+                _uiState.update { currentState ->
+                    currentState.copy(messages = currentState.messages.plus(message))
+                }
+            }
+        }
+
+    }
+
+    private fun connectToChatRoom() {
+
+        uiState.value.contact?.let {
+            launchWithIoDispatcher {
+                connectToChatRoomUseCase(it)
             }
         }
     }
 
-    private fun sendMessage(message: String) {
-//        sendMessageUseCase(
-//            message = Message(
-//                senderId =
-//            )
-//        )
+    private fun disconnectToChatRoom(){
+        launchWithIoDispatcher {
+            disconnectFromChatUseCase()
+        }
     }
 }

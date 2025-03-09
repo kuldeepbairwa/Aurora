@@ -16,6 +16,7 @@
         android:theme="@style/Theme.Aurora"
         tools:targetApi="31"
         android:name="com.kuldeep.Aurora"
+        android:usesCleartextTraffic="true"
         >
         <activity
             android:name=".core.MainActivity"

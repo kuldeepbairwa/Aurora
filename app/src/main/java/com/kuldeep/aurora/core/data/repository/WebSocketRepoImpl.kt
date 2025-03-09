@@ -1,5 +1,6 @@
 package com.kuldeep.aurora.core.data.repository
 
+import android.util.Log
 import com.kuldeep.aurora.BuildConfig
 import com.kuldeep.aurora.core.domain.repository.WebSocketRepository
 import io.ktor.client.HttpClient
@@ -21,11 +22,11 @@ class WebSocketRepoImpl @Inject constructor(
     private var connection: DefaultClientWebSocketSession? = null
 
     override suspend fun connectToWebSocket(chatId: String) {
+        Log.d("CHAT ID", chatId)
         if (connection?.isActive == true) return
 
         client.webSocket(
-            method = HttpMethod.Get,
-            host = getBaseUrl(chatId)
+            urlString = getBaseUrl(chatId)
         ) {
             connection = this
         }
@@ -39,10 +40,17 @@ class WebSocketRepoImpl @Inject constructor(
     }
 
     override suspend fun sendToWebSocket(message: String) {
+        Log.d("MESSAGE SENDER", message)
         connection?.sendSerialized(message)
     }
 
     override suspend fun receiveFromWebSocket(): Flow<String> {
+
+
+
+        connection?.receiveDeserialized<String>()?.let {
+            Log.d("MESSAGE RECEIVER", it)
+        }
         return flow {
             connection?.receiveDeserialized<String>()?.let { emit(it) }
         }

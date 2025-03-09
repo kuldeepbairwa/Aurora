@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.kuldeep.aurora.core.domain.model.Message
-import com.kuldeep.aurora.core.domain.model.MessageOwner
+import com.kuldeep.aurora.features.chat.domain.model.Message
+import com.kuldeep.aurora.features.chat.domain.model.MessageOwner
 
 @Composable
 fun MessageItem(

@@ -1,4 +1,4 @@
-package com.kuldeep.aurora.core.domain.model
+package com.kuldeep.aurora.features.chat.domain.model
 
 import com.kuldeep.aurora.core.data.model.MessageDTO
 
