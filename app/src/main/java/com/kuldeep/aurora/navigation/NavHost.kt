@@ -102,5 +102,11 @@ fun handleNavigation(navController: NavController, navAction: NavAction) {
             )
         }
 
+        is NavAction.NavigateToAndClearBackStack -> {
+            // Clear the backstack and navigate to the destination
+            navController.popBackStack() // Clear the entire backstack
+            navController.navigate(navAction.navDestination)
+        }
+
     }
 }

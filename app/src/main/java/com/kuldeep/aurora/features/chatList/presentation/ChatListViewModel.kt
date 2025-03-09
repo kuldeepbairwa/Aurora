@@ -5,6 +5,7 @@ import com.kuldeep.aurora.core.ui.BaseViewModel
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.GetLoggedInUserUseCase
 import com.kuldeep.aurora.features.chatList.domain.LogoutUseCase
+import com.kuldeep.aurora.features.chatList.domain.model.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,10 +24,11 @@ class ChatListViewModel @Inject constructor(
     init {
         launchWithIoDispatcher {
 
-            getLoggedInUserUseCase().collect{ phone ->
+            getLoggedInUserUseCase().collect { phone ->
                 _uiState.update { currentState ->
                     currentState.copy(
-                        isUserLoggedIn = phone.isNotEmpty()
+                        loginState = if (phone.isEmpty()) LoginState.LoggedOut
+                        else LoginState.LoggedIn
                     )
                 }
             }

@@ -22,13 +22,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.R
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
+import com.kuldeep.aurora.core.ui.components.Loader
 import com.kuldeep.aurora.core.ui.components.PopupMenu
 import com.kuldeep.aurora.core.ui.components.PopupMenuItem
 import com.kuldeep.aurora.core.ui.components.VerticalDivider
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
+import com.kuldeep.aurora.features.chatList.domain.model.LoginState
+import com.kuldeep.aurora.features.chatList.domain.model.isLoggedOut
 import com.kuldeep.aurora.navigation.NavAction
 import com.kuldeep.aurora.navigation.NavDestination
-
 @Composable
 fun ChatListScreen(
     viewModel: ChatListViewModel,
@@ -36,23 +38,43 @@ fun ChatListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    // Handle opening a chat
+    OpenChat(uiState, onNavigation, viewModel::onEvent)
 
-    val popupMenu: List<PopupMenuItem> = listOf(
-        PopupMenuItem("Logout") { viewModel.onEvent(ChatListUiEvent.LogOut) }
-    )
+    // Render the appropriate UI based on the login state
+    when (uiState.loginState) {
+        LoginState.LoggingIn -> Loader()
+        LoginState.LoggedIn -> ChatListContent(uiState, viewModel::onEvent)
+        LoginState.LoggedOut -> Logout(onNavigation)
+    }
+}
 
-    LaunchedEffect(uiState.isUserLoggedIn, uiState.openChat) {
-        if (!uiState.isUserLoggedIn) {
-            onNavigation(NavAction.NavigateTo(NavDestination.LoginScreen))
-        }
-        uiState.openChat?.let {
-            onNavigation(NavAction.NavigateTo(NavDestination.Chat(it)))
-            viewModel.onEvent(ChatListUiEvent.ClearOpenChat)
+@Composable
+private fun OpenChat(
+    uiState: ChatListUiState,
+    onNavigation: (NavAction) -> Unit,
+    onEvent: (ChatListUiEvent) -> Unit
+) {
+    LaunchedEffect(uiState.openChat) {
+        uiState.openChat?.let { chat ->
+            onNavigation(NavAction.NavigateTo(NavDestination.Chat(chat)))
+            onEvent(ChatListUiEvent.ClearOpenChat)
         }
     }
+}
+
+@Composable
+private fun ChatListContent(
+    uiState: ChatListUiState,
+    onEvent: (ChatListUiEvent) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val popupMenuItems = listOf(
+        PopupMenuItem("Logout") { onEvent(ChatListUiEvent.LogOut) }
+    )
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
         contentColor = MaterialTheme.colorScheme.surfaceContainer,
         topBar = {
@@ -66,9 +88,7 @@ fun ChatListScreen(
                             contentDescription = stringResource(R.string.search_chat)
                         )
                     }
-                    IconButton(onClick = {
-                        viewModel.onEvent(ChatListUiEvent.PopupMenu(true))
-                    }) {
+                    IconButton(onClick = { onEvent(ChatListUiEvent.PopupMenu(true)) }) {
                         Icon(
                             Icons.Default.MoreVert,
                             contentDescription = stringResource(R.string.more)
@@ -76,17 +96,15 @@ fun ChatListScreen(
                     }
                     PopupMenu(
                         expanded = uiState.popUpExpanded,
-                        onDismissRequest = {
-                            viewModel.onEvent(ChatListUiEvent.PopupMenu(false))
-                        },
-                        items = popupMenu
+                        onDismissRequest = { onEvent(ChatListUiEvent.PopupMenu(false)) },
+                        items = popupMenuItems
                     )
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.onEvent(ChatListUiEvent.NewChat) },
+                onClick = { onEvent(ChatListUiEvent.NewChat) },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -96,12 +114,17 @@ fun ChatListScreen(
         }
     ) { innerPadding ->
         ChatList(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
+            modifier = Modifier.padding(innerPadding),
             chats = uiState.chats,
-            onEvent = viewModel::onEvent
+            onEvent = onEvent
         )
+    }
+}
+
+@Composable
+private fun Logout(onNavigation: (NavAction) -> Unit) {
+    LaunchedEffect(Unit) {
+        onNavigation(NavAction.NavigateToAndClearBackStack(NavDestination.LoginScreen))
     }
 }
 
@@ -109,9 +132,9 @@ fun ChatListScreen(
 private fun ChatList(
     modifier: Modifier = Modifier,
     chats: List<ChatRoom>,
-    onEvent: (ChatListUiEvent) -> Unit,
+    onEvent: (ChatListUiEvent) -> Unit
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
         items(chats) { chat ->
             ChatRoomItem(chatRoom = chat) {
                 onEvent(ChatListUiEvent.OnChatSelected(chat))

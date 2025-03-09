@@ -30,7 +30,7 @@ fun LoginScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     if (uiState.isLoggedIn){
         LaunchedEffect(key1 = Unit){
-            onNavigation(NavAction.NavigateTo(NavDestination.ChatListScreen))
+            onNavigation(NavAction.NavigateToAndClearBackStack(NavDestination.ChatListScreen))
             viewModel.onEvent(LoginUiEvent.ResetState)
         }
     }

@@ -5,4 +5,5 @@ sealed interface NavAction {
     data object NavigateUp : NavAction
     data object PopBackStack : NavAction
     data class PopUpTo(val navDestination: NavDestination,val inclusive:Boolean = false) : NavAction
+    data class NavigateToAndClearBackStack(val navDestination: NavDestination) : NavAction
 }
