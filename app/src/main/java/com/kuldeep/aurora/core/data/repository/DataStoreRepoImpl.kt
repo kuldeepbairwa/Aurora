@@ -36,6 +36,12 @@ class DataStoreRepoImpl @Inject constructor(
         }.firstOrNull() ?: ""
     }
 
+    override suspend fun clearDataStorePrefs() {
+        context.dataStore.edit {
+            it.clear()
+        }
+    }
+
     companion object {
         const val DATASTORE_NAME = "auroraPrefs"
     }

@@ -1,23 +1,26 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kuldeep.aurora.R
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.core.ui.components.VerticalDivider
 import com.kuldeep.aurora.features.chatList.domain.ChatRoom
@@ -29,40 +32,17 @@ fun ChatListScreen(
     viewModel: ChatListViewModel,
     onNavigation: (NavAction) -> Unit
 ) {
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if(!uiState.isUserLoggedIn){
-        LaunchedEffect(Unit) {
+    LaunchedEffect(uiState.isUserLoggedIn, uiState.openChat) {
+        if (!uiState.isUserLoggedIn) {
             onNavigation(NavAction.NavigateTo(NavDestination.LoginScreen))
         }
+        uiState.openChat?.let {
+            onNavigation(NavAction.NavigateTo(NavDestination.Chat(it)))
+            viewModel.onEvent(ChatListUiEvent.ClearOpenChat)
+        }
     }
-
-    ChatList(
-        chats = uiState.chats,
-        onChatSelected = {
-            onNavigation(
-                NavAction.NavigateTo(
-                    NavDestination.Chat(it)
-                )
-            )
-        },
-        onFloatingActionButtonClicked = { viewModel.onEvent(ChatListUiEvent.NewChat) },
-        onActionClick = { viewModel.onEvent(ChatListUiEvent.SearchChat(uiState.searchQuery)) },
-        onNavigation = { onNavigation(NavAction.NavigateUp) }
-    )
-
-
-}
-
-@Composable
-private fun ChatList(
-    chats: List<ChatRoom>,
-    onChatSelected: (ChatRoom) -> Unit = {},
-    onFloatingActionButtonClicked: () -> Unit = {},
-    onActionClick: () -> Unit,
-    onNavigation: () -> Unit
-) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -70,60 +50,57 @@ private fun ChatList(
         contentColor = MaterialTheme.colorScheme.surfaceContainer,
         topBar = {
             AuroraAppBar(
-                text = "Chats",
-                navigationIcon = Icons.AutoMirrored.Default.ArrowBack,
-                onNavigate = onNavigation,
-                actionIcon = Icons.Default.Search,
-                onActionClicked = onActionClick
+                title = stringResource(R.string.chats),
+                navigationIcon = null,
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Default.Search,
+                            contentDescription = stringResource(R.string.search_chat)
+                        )
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Default.MoreVert,
+                            contentDescription = stringResource(R.string.more)
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onFloatingActionButtonClicked,
+                onClick = { viewModel.onEvent(ChatListUiEvent.NewChat) },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null
-                )
+                Icon(Icons.Default.Add, contentDescription = null)
             }
         }
     ) { innerPadding ->
-
-
-            LazyColumn(
-                contentPadding = innerPadding,
-            ) {
-                items(chats) {
-                    ChatRoomItem(chatRoom = it){
-                        onChatSelected(it)
-                    }
-                    VerticalDivider()
-                }
-            }
-
-
-
+        ChatList(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            chats = uiState.chats,
+            onEvent = viewModel::onEvent
+        )
     }
-
-
 }
 
 @Composable
-@Preview
-fun ChatListScreenPreview(modifier: Modifier = Modifier) {
-
-    ChatList(
-        chats = listOf(
-            ChatRoom("123","1234456567"),
-            ChatRoom("123","1234456567"),
-            ChatRoom("123","1234456567"),
-            ChatRoom("123","1234456567"),
-        ),
-        onFloatingActionButtonClicked = {},
-        onActionClick = {},
-        onNavigation = {}
-    )
+private fun ChatList(
+    modifier: Modifier = Modifier,
+    chats: List<ChatRoom>,
+    onEvent: (ChatListUiEvent) -> Unit,
+) {
+    LazyColumn(modifier = modifier) {
+        items(chats) { chat ->
+            ChatRoomItem(chatRoom = chat) {
+                onEvent(ChatListUiEvent.OnChatSelected(chat))
+            }
+            VerticalDivider()
+        }
+    }
 }

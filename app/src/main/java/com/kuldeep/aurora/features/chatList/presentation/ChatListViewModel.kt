@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
-    private val getLoggedInUserUseCase : GetLoggedInUserUseCase
+    private val getLoggedInUserUseCase: GetLoggedInUserUseCase
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(ChatListUiState())
@@ -33,70 +33,100 @@ class ChatListViewModel @Inject constructor(
 
         val chatRooms = buildList {
 
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1234567890"
-            ))
-            add(ChatRoom(
-                chatRoomId = "123",
-                receiverPhone = "1221334434"
-            ))
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1234567890"
+                )
+            )
+            add(
+                ChatRoom(
+                    chatRoomId = "123",
+                    receiverPhone = "1221334434"
+                )
+            )
         }
 
     }
 
     init {
-        _uiState.update { it.copy(
-            chats = chatRooms
-        ) }
+        _uiState.update {
+            it.copy(
+                chats = chatRooms
+            )
+        }
     }
 
     fun onEvent(event: ChatListUiEvent) {
@@ -105,7 +135,12 @@ class ChatListViewModel @Inject constructor(
             is ChatListUiEvent.SearchChat -> searchChat(event.query)
             ChatListUiEvent.NewChat -> startNewChat()
             ChatListUiEvent.NavigateUp -> navigateUp()
+            ChatListUiEvent.ClearOpenChat -> clearOpenChat()
         }
+    }
+
+    private fun clearOpenChat() {
+        _uiState.update { it.copy(openChat = null) }
     }
 
     private fun searchChat(query: String) {
@@ -116,7 +151,7 @@ class ChatListViewModel @Inject constructor(
         }
     }
 
-    fun getUserPhone(){
+    fun getUserPhone() {
 
     }
 
@@ -130,6 +165,9 @@ class ChatListViewModel @Inject constructor(
 
     private fun onChatSelected(chatRoom: ChatRoom) {
 
+        _uiState.update {
+            it.copy(openChat = chatRoom)
+        }
 
     }
 }

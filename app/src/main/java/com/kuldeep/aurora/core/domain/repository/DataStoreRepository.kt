@@ -9,4 +9,6 @@ interface DataStoreRepository {
     suspend fun getUserPhoneFlow(): Flow<String>
 
     suspend fun getUserPhone(): String
+
+    suspend fun clearDataStorePrefs()
 }

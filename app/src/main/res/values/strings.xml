@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Aurora</string>
+    <string name="go_back">Go Back</string>
+    <string name="search_chat">Search Chat</string>
+    <string name="more">More</string>
+    <string name="chats">Chats</string>
 </resources>
