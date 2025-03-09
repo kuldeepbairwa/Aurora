@@ -62,7 +62,7 @@ class ContactsRepositoryImpl @Inject constructor(
             }
             .map { it.copy(phoneNumber = it.phoneNumber.replace("-","")) }
             .sortedBy {
-            it.name
+            it.name.lowercase()
         }
 
 
