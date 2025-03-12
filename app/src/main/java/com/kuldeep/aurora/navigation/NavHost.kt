@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.kuldeep.aurora.features.chat.presentation.ChatScreen
-import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.presentation.ChatListScreen
 import com.kuldeep.aurora.features.login.presentation.LoginScreen
 import com.kuldeep.aurora.features.newChat.domain.model.Contact

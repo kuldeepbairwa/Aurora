@@ -1,6 +1,5 @@
 package com.kuldeep.aurora.features.chatList.presentation
 
-import com.kuldeep.aurora.features.chatList.domain.ChatRoom
 import com.kuldeep.aurora.features.chatList.domain.model.LoginState
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
 
