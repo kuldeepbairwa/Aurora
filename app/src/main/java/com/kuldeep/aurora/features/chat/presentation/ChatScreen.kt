@@ -17,15 +17,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kuldeep.aurora.R
 import com.kuldeep.aurora.core.ui.components.AuroraAppBar
 import com.kuldeep.aurora.core.ui.components.HorizontalSpacer
 import com.kuldeep.aurora.core.ui.components.PopupMenu
+import com.kuldeep.aurora.core.ui.components.VerticalSpacer
 import com.kuldeep.aurora.features.chat.domain.model.Message
+import com.kuldeep.aurora.features.chat.domain.model.MessageOwner
 import com.kuldeep.aurora.features.chat.presentation.components.MessageItem
 import com.kuldeep.aurora.features.chatList.presentation.ChatListUiEvent
 import com.kuldeep.aurora.features.newChat.domain.model.Contact
@@ -82,6 +86,7 @@ fun ChatContent(
         LazyColumn(modifier = Modifier.weight(1f), contentPadding = PaddingValues(vertical = 8.dp)) {
             items(messages) {
                 MessageItem(it)
+                VerticalSpacer(8.dp)
             }
         }
 
@@ -114,4 +119,17 @@ fun ChatContent(
         }
 
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChatListPreview() {
+    ChatContent(
+        messages = listOf(
+            Message("1234567890", "1234567890", "Hel ;kdsa ;slkf s;aflkh s;fdlksh f;sadlkf hsa;lfk ha;f sahfskfdh askf hsa;fskafs fhs f sahlf ksjhf lsak fjhsalkfhsalfk sjhflksadfh salkfh salk flo", MessageOwner.SENDER),
+            Message("1234567890", "1234567890", "Hi", MessageOwner.RECEIVER)
+        ),
+        messageValue = "",
+        onEvent = {}
+    )
 }
