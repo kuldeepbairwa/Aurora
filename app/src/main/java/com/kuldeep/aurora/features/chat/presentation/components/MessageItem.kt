@@ -82,8 +82,8 @@ private fun ReceiverMessageItem(text: String) {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = false)
-@Composable
-private fun MessageItemPreview() {
-    MessageItem(Message("1234567890", "1234567890", "Hello", MessageOwner.SENDER))
-}
+//@Preview(showBackground = true, showSystemUi = false)
+//@Composable
+//private fun MessageItemPreview() {
+//    MessageItem(Message("1234567890", "1234567890", "Hello", MessageOwner.SENDER))
+//}

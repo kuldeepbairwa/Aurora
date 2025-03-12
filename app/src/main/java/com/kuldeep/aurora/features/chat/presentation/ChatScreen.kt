@@ -121,15 +121,15 @@ fun ChatContent(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun ChatListPreview() {
-    ChatContent(
-        messages = listOf(
-            Message("1234567890", "1234567890", "Hel ;kdsa ;slkf s;aflkh s;fdlksh f;sadlkf hsa;lfk ha;f sahfskfdh askf hsa;fskafs fhs f sahlf ksjhf lsak fjhsalkfhsalfk sjhflksadfh salkfh salk flo", MessageOwner.SENDER),
-            Message("1234567890", "1234567890", "Hi", MessageOwner.RECEIVER)
-        ),
-        messageValue = "",
-        onEvent = {}
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun ChatListPreview() {
+//    ChatContent(
+//        messages = listOf(
+//            Message("1234567890", "1234567890", "Hel ;kdsa ;slkf s;aflkh s;fdlksh f;sadlkf hsa;lfk ha;f sahfskfdh askf hsa;fskafs fhs f sahlf ksjhf lsak fjhsalkfhsalfk sjhflksadfh salkfh salk flo", MessageOwner.SENDER),
+//            Message("1234567890", "1234567890", "Hi", MessageOwner.RECEIVER)
+//        ),
+//        messageValue = "",
+//        onEvent = {}
+//    )
+//}

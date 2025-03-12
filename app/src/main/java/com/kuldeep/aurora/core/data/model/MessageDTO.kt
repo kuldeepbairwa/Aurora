@@ -6,16 +6,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MessageDTO(
-    val formPhoneNumber: String,
+    val fromPhoneNumber: String,
     val toPhoneNumber:String,
-    val message: String
+    val message: String,
 )
 
 fun MessageDTO.toMessage(messageOwner: MessageOwner): Message{
     return Message(
-        senderId = formPhoneNumber,
+        senderId = fromPhoneNumber,
         receiverId = toPhoneNumber,
         message = message,
-        messageOwner = messageOwner
+        messageOwner = messageOwner,
+        timeStamp = System.currentTimeMillis()
     )
 }
